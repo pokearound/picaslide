@@ -9,5 +9,6 @@ Usage:
 - Save it on your website
 - You are Done with your album/image gallery and a beautiful slideshow!
 - Images hosted in picasaweb.google.com
+- <a href="http://anandchakru.github.io/picaslide">Demo</a>
 
 Start using the html page in your website!
