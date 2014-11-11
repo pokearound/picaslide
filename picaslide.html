@@ -1,0 +1,667 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<title>Simple Slideshow</title>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<link rel="stylesheet" type="text/css" media="screen" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css"></link>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+		<style type="text/css">
+			*{margin:0;padding:0}
+			body{background:#ddd;height:100%}
+			img{border:none}
+			#picllery-wrap{width:100%;height:100%;position:fixed}
+			#picllery-loader-anim{position:absolute;top:50%;left:50%;z-index:-4;width:40px;height:31px;text-indent:-999em;background-repeat:no-repeat;background-position:center;background-image:url(data:image/gif;base64,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);margin:-30px 0 0 -30px}
+			#picllery-holder-crnt{height:100%;width:100%;text-align:center;position:fixed;z-index:-5}
+			#picllery-holder-crnt img{max-width:100%;max-height:100%}
+			#picllery-controls-wrap{height:45px;width:100%;bottom:0;position:fixed;float:left;overflow:hidden;opacity:0.3;filter:alpha(opacity=30);background-color:#000;margin-bottom:3px;z-index:5;box-shadow:0 -2px 0 rgba(50,50,50,0.25);-webkit-transition:opacity 1s ease-out;-moz-transition:opacity 1s ease-out;-o-transition:opacity 1s ease-out;transition:opacity 1s ease-out}
+			#picllery-controls-wrap:hover{opacity:1.0!important;filter:alpha(opacity=100)!important;text-shadow:0 0 .15em #222}
+			#picllery-controls{float:left;width:auto;height:100%;color:#9AB;padding-top:7px}
+			#picllery-page-controls{float:right;width:250px;height:100%;color:#9AB;padding-top:7px;padding-right:7px}
+			#slide_number,#page_number{font-size:24px;padding-left:10px;position:relative;top:-3px}
+			#picllery-controls-wrap a{padding-left:15px}
+			#picllery-thumb-wrap,#picllery-album-wrap{overflow:hidden;height:92%;position:fixed;z-index:0;display:none;background-color:#222;width:93%;left:3%;padding-left:2%;padding-bottom:1%;padding-top:1%;margin-top:1%;text-align:center;border-radius:5px}
+			.button_on{color:#369}
+			.button_off{color:#9AB}
+			.one20x120{width:120px;height:120px}
+			.picllery-thumb-holder{margin-left:5px;margin-bottom:5px;height:40px;width:40px;float:left;position:relative;text-align:center}
+			.picllery-thumb-holder img{border:1px solid #fff;max-height:100%;max-width:100%;-moz-border-radius:40px;border-radius:40px;-webkit-transition:opacity 5s ease;-moz-transition:opacity 5s ease;-o-transition:opacity 5s ease;transition:opacity 5s ease;opacity:0.7;filter:alpha(opacity=70)}
+			.picllery-thumb-holder img:hover{opacity:1.0;filter:alpha(opacity=100);-moz-border-radius:2px;border-radius:2px;-webkit-transition:border-radius .5s ease;-moz-transition:border-radius .5s ease;-o-transition:border-radius .5s ease;transition:border-radius .5s ease;cursor:pointer}
+			.div-title{font-family:'Helvetica Neue', arial, sans-serif;font-size:10px;font-weight:700;padding-top:3px;color:#9AB}
+			.hover-highlight:hover{text-shadow:0 0 .15em #ccc;cursor:pointer}
+			.current{background-color:#567}
+			#picllery-mouse-listener{z-index:4;position:fixed;bottom:0;left:0;height:45px;width:100%;box-shadow:0 -1px 0 rgba(50,50,50,0.25)}
+			#picllery-mouse-listener a{bottom:1%;left:2px;position:fixed}
+			#picllery-progress-back{z-index:5;position:fixed;bottom:0;left:0;height:3px;width:100%;background-color:#444}
+			#picllery-progress-bar{position:relative;height:3px;width:100%;background-color:#999}
+			#picllery-progress-car{height:1px;top:1px;width:100%;background-color:#fff;position:relative}
+			.picllery-thumb-title,.picllery-album-title{margin-top:5px;border-top:1px solid #999;padding-top:5px;display:none}
+			.picllery-thumb,.picllery-album{float:left;width:140px;height:160px;border-radius:5px;text-align:center;box-shadow:5px 5px 10px 3px rgba(68,85,102,0.4);margin:10px}
+			.picllery-thumb:hover,.picllery-album:hover{box-shadow:5px 5px 10px 3px rgba(68,85,102,0.9)}
+			.picllery-thumb:active,.picllery-album:active{box-shadow:7px 7px 10px 5px rgba(78,95,112,0.7)}
+			.picllery-thumb-cell,.picllery-album-cell{text-align:center;position:relative;height:140px}
+			.cell{position:relative}
+			.cell img{background:#012;border-radius:5px;padding:1px}
+			.cell img:hover{cursor:pointer}
+		</style>
+		<script type="application/javascript">
+			jQuery(function($){
+				var url_albums = ["https://picasaweb.google.com/anandchakru/Frens"
+				                  ,"https://picasaweb.google.com/anandchakru.d5000/2010?authkey=Gv1sRgCLnr4rPi8KSNJg"
+					              ,"https://picasaweb.google.com/anandchakru.d5000/2011?authkey=Gv1sRgCK_hu-j8o-us7wE"];
+				var thumb_button = $('#picllery-button-thumb');
+				var album_button = $('#picllery-button-album');
+				var progress_bar = $('#picllery-progress-bar');
+				var play_button = $('#picllery-button-play');
+				var rand_button = $('#picllery-button-rand');
+				var img_waiting = $('#picllery-loader-anim');
+				var dom_slide_curr = $('#picllery-holder-crnt');
+				var dom_slide_prev = $('#slide-prev');
+				var dom_slide_next = $('#slide-next');
+				var nextslide_button = $('#picllery-button-next');
+				var prevslide_button = $('#picllery-button-prev');
+				var div_pagenumber = $('#page_number');
+				var div_slidenumber = $('#slide_number');
+				var div_slidecaption = $('#slidecaption');
+				var div_thumb = $('#picllery-thumb-wrap');
+				var div_album = $('#picllery-album-wrap');
+				var progress_back = $('#picllery-mouse-listener');
+				var picllery_controls = $('#picllery-controls-wrap');
+				var picllery_page_controls = $('#picllery-page-controls');
+				var picllery_next_page = $('#picllery-button-nextpage');
+				var picllery_prev_page = $('#picllery-button-prevpage');
+				
+				var page_size_thumb;
+				var no_of_pages_thumb;
+				var current_page_thumb=1;
+				var page_size_album;
+				var no_of_pages_album;
+				var current_page_album=1;
+				var slide_interval = 3000;
+				var set_interval_id;
+				var is_playing = false;
+				var is_rand = false;
+				var is_showing_thumb = false;
+				var is_showing_album = false;
+				var is_showing_picllery_controls = false;
+				var id_showing_picllery_controls;
+				var id_current_album = 0;
+				var id_current_photo = 0;
+				var is_shuffle_enabled = false;
+				var album_fetch_count = 0;
+				var metadata_albums = [];
+				var paused_on_blur = false;
+				var prev_img;
+				var next_img;
+				
+				var fnRenderPic = function(){
+					console.log('Renderinging : ' + id_current_album+'.'+id_current_photo+' of '+ metadata_albums[id_current_album].albumdata.length);
+					img_waiting.show();
+					div_slidenumber.empty().html((id_current_photo+1) + ' of '+ (metadata_albums[id_current_album].albumdata.length));
+					div_slidecaption.empty().html(metadata_albums[id_current_album].albumname +'-'+ metadata_albums[id_current_album].albumdata[id_current_photo].title);
+					fnLoadCurrentPic();
+					fnCacheNextPic();
+					fnHighlightCurrentThumb();
+				};
+				var fnCacheNextPic = function(){
+					if(!is_rand){
+						next_img = $('<img src="'+metadata_albums[id_current_album].albumdata[fnGetNextPicId()].image+'"/>');
+						next_img.load(function(){
+							console.log('Cached : ' + fnGetNextPicId());
+						});
+					}
+				};
+				var fnLoadCurrentPic = function(){
+					var img = $('<img src="'+metadata_albums[id_current_album].albumdata[id_current_photo].image+'"/>');
+					dom_slide_curr.empty();
+					if(is_playing){
+						clearInterval(set_interval_id);	
+					}
+					img.load(function(){
+						img_waiting.hide();
+						dom_slide_curr.append(img)
+						if(is_playing){
+							fnAnimateProgressBar();
+							set_interval_id = setInterval(fnNextPic, slide_interval);
+						}
+						prev_img = img;
+					});
+				};
+				var fnRenderThumb = function(){
+					fnUpdateCntPerPage();
+					div_thumb.empty();
+					div_pagenumber.empty().html(current_page_thumb + ' of ' + Math.ceil((metadata_albums[id_current_album].albumdata.length)/page_size_thumb));
+					$.each(metadata_albums[id_current_album].albumdata, function(i,item){
+						if(i>=((page_size_thumb*(current_page_thumb-1))) && i<(page_size_thumb*current_page_thumb)){
+							var c = $("<div class='picllery-thumb'/>");
+							var d = $("<div class='picllery-thumb-cell'/>");
+							var e = $("<div class='cell'/>");
+							var f = $("<img src='"+item.thumb+"'/>");
+							c.append(d);
+							d.append(e);
+							e.append(f);
+							div_thumb.append(c);
+							f.load(function(){
+								if(d.height()<this.height){
+									e.css({
+										top: '2px'
+									});
+								}else{
+									e.css({
+										top: (((d.height() - this.height)/2))+'px'
+									});
+								}
+								c.click(function(){
+									id_current_photo = i;
+									fnRenderPic();
+									fnHideThumbTray();
+								}).fadeIn();
+							});
+						}
+					});
+					if(is_showing_thumb){
+						div_thumb.fadeIn();
+					}
+					fnHighlightCurrentThumb();
+				};
+				var fnRenderAlbum = function(){
+					fnUpdateCntPerPage();
+					div_album.empty();
+					div_pagenumber.empty().html(current_page_album + ' of ' + Math.ceil((metadata_albums.length)/page_size_album));
+					$.each(metadata_albums, function(i,item){
+						if(i>=((page_size_album*(current_page_album-1))) && i<(page_size_album*current_page_album)){
+							var c = $("<div class='picllery-album'/>");
+							var d = $("<div class='picllery-album-cell'/>");
+							var e = $("<div class='cell'/>");
+							var f = $("<img src='"+item.albumthumb+"' class='one20x120'/>");
+							var g = $("<div class='div-title'>"+item.albumname+"</div>");
+							c.append(d);
+							c.append(g);
+							d.append(e);
+							e.append(f);
+							div_album.append(c);
+							f.load(function(){
+								if(d.height()<this.height){
+									e.css({
+										top: '2px'
+									});
+								}else{
+									e.css({
+										top: (((d.height() - this.height)/2))+'px'
+									});
+								}
+								c.click(function(){
+									id_current_album = i;
+									id_current_photo = 0;
+									fnRenderPic();
+									fnHideAlbumTray();
+									fnRenderThumb();
+								}).fadeIn();
+							});
+						}
+					});
+					if(is_showing_album){
+						div_album.fadeIn();
+					}
+					fnHighlightCurrentAlbum();
+					fnHighlightCurrentThumb();
+				};
+				var fnHighlightCurrentThumb = function(){
+					var i = id_current_photo-((current_page_thumb-1)*page_size_thumb);
+					var rr = $('.picllery-thumb').removeClass('current');
+					//console.log('current thumb: '+ i + " : " + rr.length);
+					if(rr && rr.length>0 && rr.length>i && i>0){
+						$(rr[i]).addClass('current');
+					}
+				};
+				var fnHighlightCurrentAlbum = function(){
+					var i = id_current_album-((current_page_album-1)*page_size_album);
+					var rr = $('.picllery-album').removeClass('current');
+					console.log('current album: '+ i + " : " + rr.length);
+					if(rr && rr.length>0 && rr.length>i && i>0){
+						$(rr[i]).addClass('current');
+					}
+				};
+				var fnGetNextPicId = function(){
+					var r = id_current_photo+1;
+					if(metadata_albums[id_current_album].albumdata.length<=r){
+						r=0;
+					}
+					return r;
+				};
+				var fnNextPic = function(){
+					if(is_playing && is_rand){
+						id_current_photo = fnGetRand(metadata_albums[id_current_album].albumdata.length-1);
+					}else{
+						id_current_photo=fnGetNextPicId();
+					}
+					fnRenderPic();
+				};
+				var fnPrevPic = function(){
+					id_current_photo--;
+					if(id_current_photo<0){
+						id_current_photo = metadata_albums[id_current_album].albumdata.length-1;
+					}
+					fnRenderPic();
+				};
+				var fnNextAlbum = function(){
+					id_current_album++;
+					if(metadata_albums.length<=id_current_album){
+						id_current_album=0;
+					}
+					id_current_photo=0;
+					fnRenderPic();
+					fnRenderThumb();
+					fnHighlightCurrentAlbum();
+				};
+				var fnPrevAlbum = function(){
+					id_current_album--;
+					if(id_current_album<0){
+						id_current_album = metadata_albums.length-1;
+					}
+					id_current_photo=0;
+					fnRenderPic();
+					fnRenderThumb();
+					fnHighlightCurrentAlbum();
+				};
+				var fnShowThumbTray = function(event){
+					fnPause();
+					if(is_showing_album){
+						fnHideAlbumTray();
+					}
+					div_thumb.show();//stop().animate({bottom : 0, avoidTransforms : true}, 300 );
+					$('i', thumb_button).addClass('button_on').removeClass('button_off');//.css({color:'#666','border':'1px solid #666'});
+					is_showing_thumb = true;
+					fnShowPageButtons();
+					return false;
+				};
+				var fnHideThumbTray = function(event){
+					div_thumb.hide();//stop().animate({bottom : -div_thumb.height(), avoidTransforms : true}, 300 );
+					$('i', thumb_button).addClass('button_off').removeClass('button_on');//.css({color:'#999','border':'none'});
+					is_showing_thumb = false;
+					fnHidePageButtons();
+					return false;
+				};
+				var fnShowAlbumTray = function(event){
+					fnPause();
+					if(is_showing_thumb){
+						fnHideThumbTray();
+					}
+					div_album.show();//stop().animate({bottom : 0, avoidTransforms : true}, 300 );
+					$('i', album_button).addClass('button_on').removeClass('button_off');//.css({color:'#666','border':'1px solid #666'});
+					is_showing_album = true;
+					fnShowPageButtons();
+					return false;
+				};
+				var fnHideAlbumTray = function(event){
+					div_album.hide();//stop().animate({bottom : -div_album.height(), avoidTransforms : true}, 300 );
+					$('i', album_button).addClass('button_off').removeClass('button_on');//.css({color:'#999','border':'none'});
+					is_showing_album = false;
+					fnHidePageButtons();
+					return false;
+				};
+				var fnShowPageButtons = function(){
+					picllery_page_controls.fadeIn();
+				};
+				var fnHidePageButtons = function(){
+					picllery_page_controls.fadeOut();
+				};
+				var fnPlay = function(event){
+					if(!is_playing){
+						fnAnimateProgressBar();
+						set_interval_id = setInterval(fnNextPic, slide_interval);
+						is_playing = true;
+						$('i', play_button).addClass('fa fa-pause').removeClass('fa-play');
+					}
+					if(is_showing_thumb){
+						fnHideThumbTray();
+						is_showing_thumb=false;
+					}
+					if(is_showing_album){
+						fnHideAlbumTray();
+						is_showing_album=false;
+					}
+				};
+				var fnRand = function(event){
+					if(!is_rand){
+						is_rand = true;
+						$('i', rand_button).addClass('button_on').removeClass('button_off');
+					}else{
+						is_rand = false;
+						$('i', rand_button).addClass('button_off').removeClass('button_on');
+					}
+				};
+				var rnd_cur_slide = rnd_prev1_slide = rnd_prev2_slide = 0;
+				var fnGetRand = function(upperlimit){
+						rnd_cur_slide = rnd_prev1_slide;
+						rnd_prev1_slide = rnd_prev2_slide;
+						do {
+							rnd_prev2_slide = Math.floor(Math.random() * upperlimit) + 1;
+						}while (rnd_prev2_slide == rnd_cur_slide || rnd_prev2_slide == rnd_prev1_slide);
+						console.log('1:' + rnd_cur_slide + ', 2:' + rnd_prev1_slide + ',3:'+rnd_prev2_slide);
+					    return rnd_prev1_slide;
+				};
+				var fnPause = function(event){
+					if(is_playing){
+						clearInterval(set_interval_id);
+						is_playing = false;
+						$('i', play_button).addClass('fa fa-play').removeClass('fa-pause');
+						fnResetProgressBar();
+					}
+				};
+				var fnAnimateProgressBar = function(){
+					progress_bar.stop().css({left : -$(window).width()}).animate({ left:0 }, slide_interval);
+				};
+				var fnResetProgressBar = function(){
+					progress_bar.stop().css({left : -$(window).width()});
+				};
+				var fnGoToNextPage = function(){
+					if(is_showing_thumb){
+						fnUpdateCntPerPage();
+						current_page_thumb++;
+						if(no_of_pages_thumb<current_page_thumb){
+							current_page_thumb=1;
+						}
+						fnRenderThumb();
+					}else if(is_showing_album){
+						current_page_album++;
+						if(no_of_pages_album<current_page_album){
+							current_page_album=1;
+						}
+						fnRenderAlbum();
+					}
+				};
+				var fnGoToPrevPage = function(){
+					if(is_showing_thumb){
+						fnUpdateCntPerPage();
+						current_page_thumb--;
+						if(current_page_thumb==0){
+							current_page_thumb=no_of_pages_thumb;
+						}
+						fnRenderThumb();
+					}else if(is_showing_album){
+						current_page_album--;
+						if(current_page_album==0){
+							current_page_album=no_of_pages_album;
+						}
+						fnRenderAlbum();
+					}
+				};
+				fnHideThumbTray();
+				fnHideAlbumTray();
+				thumb_button.click(function(){
+					if(!is_showing_thumb){
+						fnShowThumbTray();
+					}else{
+						fnHideThumbTray();
+					}
+					return false;
+				});
+				album_button.click(function(){
+					if(!is_showing_album){
+						fnShowAlbumTray();
+					}else{
+						fnHideAlbumTray();
+					}
+					return false;
+				});
+				picllery_next_page.click(function(){
+					fnGoToNextPage();
+					return false;
+				});
+				picllery_prev_page.click(function(){
+					fnGoToPrevPage();
+					return false;
+				});
+				var fnFetchAlbumData = function(){
+					if(url_albums.length<=album_fetch_count){
+						return;
+					}
+					console.log('fetching : ' + album_fetch_count);
+					var url = url_albums[album_fetch_count++].replace('http://picasaweb.google.com/','').replace('https://picasaweb.google.com/','');
+					var uName = url.substr(0, url.indexOf("/"));
+					var albumName = (url.indexOf('?authkey')>0)?url.substr(url.indexOf("/")+1, (url.indexOf("?")-(url.indexOf("/")+1))):url.substr(url.indexOf("/")+1,url.length);
+					var auKey = (url.indexOf('?authkey')>0)?url.substr(url.indexOf("=")+1, (url.length-(url.indexOf("=")+1))):'';
+					var jsonUrl = 'https://picasaweb.google.com/data/feed/api/user/' + uName + '/album/' + albumName + '?' + ((auKey)?('&authkey=' + auKey):('')) + '&kind=photo&access=public&max-results=999&thumbsize=128u,256u,640u,1280u&alt=json';//&reqId='+Math.round(new Date().getTime());
+					$.ajax({
+						url: jsonUrl
+						, dataType: "json"
+						, success: function(data){
+							fnProcessData(data.feed, albumName);
+							if(id_current_album==0 && album_fetch_count==1){ //first album fetched
+								fnFetchAlbumData();
+								fnRenderPic();
+								fnRenderThumb();
+							}else if(album_fetch_count>=url_albums.length){ //all albums fetched
+								fnRenderAlbum();
+							}else{
+								fnFetchAlbumData();
+							}
+						}
+						, error: function(xhr, status, error){
+							console.log(xhr + ":" + status + ":" + error);
+							fnFetchAlbumData();
+						}
+					});
+			 	};
+			 	
+			 	var fnProcessData = function(imgsMetaData, aName){
+			 		var t1 = $.map(imgsMetaData.entry,  function(value, index){
+			 			return {
+		 					image: value.media$group.media$content[0].url+'?imgmax=2048',
+		 					title: value.title.$t,
+		 					thumb: value.media$group.media$thumbnail[0].url
+		 				};
+			 		});
+			 		var t2 = {
+		 				albumthumb:imgsMetaData.icon.$t,
+		 				albumdata:t1,
+		 				albumname:aName
+		 			};
+			 		metadata_albums.push(t2);
+			 	};
+				
+			 	var fnHideControls = function(){
+			 		is_showing_picllery_controls = false;
+					picllery_controls.stop().animate({'bottom': '-45px'},3000);
+					progress_back.show();
+				};
+				var fnShowControls = function(){
+					is_showing_picllery_controls = true;
+					picllery_controls.stop().animate({'bottom': '0px'},250);
+					progress_back.hide();
+				};
+				var fnUpdateCntPerPage = function(){
+					var x = Math.floor(div_thumb.width()/140)-1;
+					var y = Math.floor((div_thumb.height()-50)/160);
+					page_size_thumb = x*y;
+					no_of_pages_thumb = Math.ceil(metadata_albums[id_current_album].albumdata.length/page_size_thumb);
+					page_size_album = x*y;
+					no_of_pages_album = Math.ceil(metadata_albums.length/page_size_album);
+				}
+				play_button.click(function(){
+					if(is_playing){
+						fnPause();
+					}else{
+						fnPlay();
+					}
+				});
+				rand_button.click(function(){
+					fnRand();
+				});
+				nextslide_button.click(function(){
+					fnNextPic();
+					fnPause();
+				});
+				prevslide_button.click(function(){
+					fnPrevPic();
+					fnPause();
+				});
+				$(window).resize(function () {
+				    waitForFinalEvent(function(){
+						fnPause();
+						dom_slide_curr.stop().animate({
+							width: '100%',
+							height: '100%'
+						});
+						//console.log(div_thumb.width() + ' x ' + div_thumb.height());
+						div_thumb.stop().animate({
+							width: '93%',
+							height: '92%'
+						});
+						div_album.stop().animate({
+							width: '93%',
+							height: '92%'
+						});
+						if(is_showing_thumb){
+							fnRenderThumb();
+						}else if(is_showing_album){
+							fnRenderAlbum();
+						}
+					},500,'after1win2resize3timer4id');
+				}).focus(function(){
+					if(paused_on_blur){
+						paused_on_blur = false;
+						fnPlay();
+					}
+				}).blur(function(){
+					if(is_playing){
+						paused_on_blur = true;
+						fnPause();
+					}
+				});
+				fnResetProgressBar();
+				fnFetchAlbumData();
+				
+				$(document).keydown(function(e){
+					console.log('pressed : '+e.which);
+					if(e.which == 32){//spacebar
+	                	if(is_playing){
+							fnPause();
+						}else{
+							fnPlay();
+						}
+	                	return false;
+					} else if (e.keyCode == 27) {//esc
+						fnHideThumbTray();
+						fnHideAlbumTray();
+						return false;
+	                } else if (e.keyCode == 84) {//t
+	                	if(is_showing_thumb){
+							fnHideThumbTray();
+						}else{
+							fnShowThumbTray();
+						}
+						return false;
+	                } else if (e.keyCode == 65) {//a
+	                	if(is_showing_album){
+							fnHideAlbumTray();
+						}else{
+							fnShowAlbumTray();
+						}
+						return false;
+	                } else if (e.keyCode == 82) {//r
+						fnRand();
+						return false;
+	                } else if (e.keyCode == 37) {//left arrow
+	                	if(is_showing_thumb){
+	                		fnGoToPrevPage();
+	                	}else if(is_showing_album){
+	                		fnGoToPrevPage();
+	                	}else{
+	                		fnPause();
+				    		fnPrevPic();
+	                	}
+				    	return false;
+				    } else if(e.which == 39){//right arrow
+						if(is_showing_thumb){
+							fnGoToNextPage();
+	                	}else if(is_showing_album){
+	                		fnGoToNextPage();
+	                	}else{
+				    		fnPause();
+	                		fnNextPic();
+	                	}
+	                	return false;
+	                } else if(e.which == 33){//page Up
+	                	fnNextAlbum();
+	                	fnPause();
+	                	return false;
+	                } else if(e.which == 34){//page Down
+	                	fnPrevAlbum();
+	                	fnPause();
+	                	return false;
+	                }
+				}).mousemove(function(e){
+					if(e.pageY>($(this).height()-45)){
+						if(!is_showing_picllery_controls){
+							fnShowControls();
+						}
+					}else{
+						if(is_showing_picllery_controls){
+							fnHideControls();
+						}
+					}
+				});
+				picllery_controls.stop().animate({'bottom': '-45px'},2500, function(){
+					is_showing_picllery_controls = false;
+				});
+				fnHidePageButtons();
+		    });
+			var waitForFinalEvent = (function () {
+				var timers = {};
+				return function (callback, ms, uniqueId) {
+					if (!uniqueId) {
+						uniqueId = "Don't call this twice without a uniqueId";
+				    }
+				    if (timers[uniqueId]) {
+				    	clearTimeout (timers[uniqueId]);
+				    }
+				    timers[uniqueId] = setTimeout(callback, ms);
+				};
+			})();
+		</script>
+		
+	</head>
+	
+	<body>
+		<div id="picllery-wrap">
+			<div id="picllery-loader-anim"></div>
+			
+			<div id="picllery-holder-crnt"></div>
+			
+			<!-- <div id="picllery-holder-prev"></div>
+				<div id="picllery-holder-next"></div> -->
+			<div id="picllery-controls-wrap">
+				<div id="picllery-controls">
+					<a id="picllery-button-play"><i class="fa fa-2x fa-play hover-highlight"></i></a>
+					<a id="picllery-button-rand"><i class="fa fa-2x fa-random hover-highlight"></i></a>
+					<a id="picllery-button-prev"><i class="fa fa-2x fa-chevron-left hover-highlight"></i></a>
+					<a id="picllery-button-next"><i class="fa fa-2x fa-chevron-right hover-highlight"></i></a>
+					<a id="picllery-button-thumb"><i class="fa fa-2x fa-th hover-highlight"></i></a>
+					<a id="picllery-button-album"><i class="fa fa-2x fa-th-list hover-highlight"></i></a>
+					<span id="slide_number"></span>
+				</div>
+				<div id="picllery-page-controls">
+					<a id="picllery-button-prevpage"><i class="fa fa-2x fa-backward hover-highlight"></i></a>
+					<a id="picllery-button-nextpage"><i class="fa fa-2x fa-forward hover-highlight"></i></a>
+					<span id="page_number">1 of 5</span>
+				</div>
+			</div>
+			<div id="picllery-thumb-wrap">
+				<div></div>
+				<div></div>
+			</div>
+			<div id="picllery-album-wrap">
+			</div>
+		</div>
+		
+		<div id="picllery-mouse-listener">
+			<!-- <a id="picllery-button-play"><i class="fa fa-2x fa-align-justify hover-highlight"></i></a> -->
+		</div>
+		<div id="picllery-progress-back">
+			<div id="picllery-progress-bar">
+				<div id="picllery-progress-car"></div>
+			</div>
+		</div>
+	</body>
+</html>
