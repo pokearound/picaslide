@@ -462,12 +462,12 @@
 				
 			 	var fnHideControls = function(){
 			 		is_showing_picllery_controls = false;
-					picllery_controls.stop().animate({'bottom': '-45px'},3000);
+					//picllery_controls.stop().animate({'bottom': '-45px'},3000);
 					progress_back.show();
 				};
 				var fnShowControls = function(){
 					is_showing_picllery_controls = true;
-					picllery_controls.stop().animate({'bottom': '0px'},250);
+					//picllery_controls.stop().animate({'bottom': '0px'},250);
 					progress_back.hide();
 				};
 				var fnUpdateCntPerPage = function(){
@@ -602,9 +602,9 @@
 						}
 					}
 				});
-				picllery_controls.stop().animate({'bottom': '-45px'},2500, function(){
-					is_showing_picllery_controls = false;
-				});
+				//picllery_controls.stop().animate({'bottom': '-45px'},2500, function(){
+				//	is_showing_picllery_controls = false;
+				//});
 				fnHidePageButtons();
 		    });
 			var waitForFinalEvent = (function () {
